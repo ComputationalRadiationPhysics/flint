@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+      GDML Setup file
+      (c) 2009 by Lucas Clemente
+      l.clemente@fzd.de
+      
+      Length-unit is mm
+      
+      GDML-Doc: http://lcgapp.cern.ch/project/simu/framework/GDML/doc/GDMLmanual.pdf
+-->
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="gdml.xsd">
+
+ <particles>
+  <particle name="gamma" />
+  <particle name="higgs" /> <!-- ;)-->
+  <particle name="e-" />
+  <particle name="e+" />
+  <particle name="proton" />
+ </particles>
+
+ <outputs>
+  <output name="trajectories" />
+  <output name="dose" x_min="-1e30" x_max="1e30" y_min="-1e30" y_max="1e30" z_min="-1e30" z_max="1e30" nx="1" ny="1" nz="1"/>
+ </outputs>
+
+ <define>
+  <constant name="HALFPI" value="pi/2."/>
+  <constant name="PI" value="1.*pi"/>
+  <constant name="TWOPI" value="2.*pi"/>
+  <position name="center"/>
+  <position name="ph_1" z="0.1"/>
+ </define>
+
+ <materials>
+  <material name="Al" Z="13" >
+   <D value="2.7" unit="g/cm3"/>
+   <atom value="26.981"/>
+  </material>
+  
+  <material name="H" formula="H" Z="1">
+   <D value="0.0899e-19" unit="kg/m3" />
+   <atom value="2.015558" unit="kg/mole"/> 
+  </material>
+  
+ </materials>
+ 
+ <solids>
+  <box name="WorldBox" x="100000.0" y="100000.0" z="100000.0"/>
+  <box name="Box" x="10000" y="10000" z="10000"/>
+ </solids>
+ 
+ <structure>
+  <volume name="box">
+   <materialref ref="Al"/>
+   <solidref ref="Box"/>
+  </volume>
+  
+  <volume name="World">
+   <materialref ref="H"/>
+   <solidref ref="WorldBox"/>
+   <physvol>
+    <volumeref ref="box"/>
+    <positionref ref="center"/>
+   </physvol>
+  </volume>
+ </structure>
+ 
+ <setup name="Default" version="1.0">
+  <world ref="World"/>
+ </setup>
+ 
+ <gpt>
+  N = 1;
+  
+  #accuracy(14);
+  
+  
+  setparticles("beam", N, me, qe, 0.0);
+  
+  setxdist("beam", "u", 0, 0);
+  setydist("beam", "u", 0, 0);
+  setzdist("beam", "u", 0, 0);
+  
+  setGBzdist("beam", "u", 1.732050808, 0);
+  
+  G4Virtual("wcs", "I");
+  
+  tout(0, 1e-12, 1e-13);
+  
+  time = 0;
+  
+  dtmaxt(0, 6e-13, 1e-16);
+ </gpt>
+</gdml>

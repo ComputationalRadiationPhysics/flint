@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2009 Lucas Clemente
+
+This file is part of FLINT.
+
+FLINT is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+FLINT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with FLINT.
+If not, see <http://www.gnu.org/licenses/>.
+   
+
+GDML Setup file
+
+Length-unit is mm
+
+GDML-Doc: http://lcgapp.cern.ch/project/simu/framework/GDML/doc/GDMLmanual.pdf
+-->
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="gdml.xsd">
+
+ <particles>
+  <particle name="gamma" />
+  <particle name="higgs" /> <!-- ;)-->
+  <particle name="e-" />
+  <particle name="e+" />
+ </particles>
+
+ <outputs>
+  <output name="trajectories" />
+  <!--<output name="dose" x_min="-1e3" x_max="1e3" y_min="-1e3" y_max="1e3" z_min="0" z_max="2e3" nx="1" ny="1" nz="2000"/>-->
+ </outputs>
+
+ <define>
+  <constant name="HALFPI" value="pi/2."/>
+  <constant name="PI" value="1.*pi"/>
+  <constant name="TWOPI" value="2.*pi"/>
+  <position name="center"/>
+  <position name="ph_1" z="200.0"/>
+  <position name="ph_2" z="1400.0"/>
+ </define>
+
+ <materials>
+  <material name="Cu" Z="29" >
+   <D value="8.92" unit="g/cm3"/>
+   <atom value="63.546" />
+  </material>
+  
+  <material name="H" formula="H" Z="1">
+   <D value="0.0899e-19" unit="kg/m3" />
+   <atom value="2.015558" unit="kg/mole"/> 
+  </material>
+  
+ </materials>
+ 
+ <solids>
+  <box name="WorldBox" x="2000.0" y="2000.0" z="6000.0"/>
+  <tube name="pinhole_1" z="20.0" rmin="6.0"  rmax="200.0" deltaphi="TWOPI" aunit="rad"/>
+  <tube name="pinhole_2" z="20.0" rmin="1.0" rmax="100.0" deltaphi="TWOPI" aunit="rad"/>
+ </solids>
+ 
+ <structure>
+  <volume name="pinhole_1">
+   <materialref ref="Cu"/>
+   <solidref ref="pinhole_1"/>
+  </volume>
+  <volume name="pinhole_2">
+   <materialref ref="Cu"/>
+   <solidref ref="pinhole_2"/>
+  </volume>
+  
+  <volume name="World">
+   <materialref ref="H"/>
+   <solidref ref="WorldBox"/>
+   <physvol>
+    <volumeref ref="pinhole_1"/>
+    <positionref ref="ph_1"/>
+   </physvol>
+   <physvol>
+    <volumeref ref="pinhole_2"/>
+    <positionref ref="ph_2"/>
+   </physvol>
+  </volume>
+ </structure>
+ 
+ <setup name="Default" version="1.0">
+  <world ref="World"/>
+ </setup>
+ 
+ <gpt>
+  gamma = 100;
+  N = 100;
+  
+  radius = 7e-3;
+  
+  setparticles("beam", N, me, qe, 0.0);
+  
+  setrxydist("beam", "u", radius/2, radius);
+  setphidist("beam", "u", 0, 2*pi);
+  setGdist("beam", "u", gamma, 0);
+  
+  G4Virtual("wcs", "I");
+  
+  quadrupole("wcs", "z", 0.5, 0.1, 3.9);
+  quadrupole("wcs", "z", 0.8, 0.2, -3.25);
+  
+  tout(0, 7e-9, 2e-11);
+  
+ </gpt>
+</gdml>

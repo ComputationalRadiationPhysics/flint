@@ -1,0 +1,70 @@
+\documentclass{article}
+
+\usepackage[applemac]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{setspace}  
+\usepackage{stmaryrd}
+\usepackage{nameref}
+\usepackage{multimedia}
+\usepackage{relsize}
+\usepackage{color}
+\usepackage{pst-all}
+\usepackage{anysize}
+\usepackage[papersize={4.06cm,5.2cm}]{geometry}
+
+
+\marginsize{-0.25cm}{-0cm}{-1.4cm}{-10cm}
+
+\pagestyle{empty}
+
+\definecolor{lightblue}{rgb}{0.4, 0.4, 1}
+\definecolor{lighterblue}{rgb}{0.7, 0.7, 1}
+
+\newcommand{\mypspoint}[2]{\pscircle*[linecolor=blue](#1,#2){0.05}\pscircle*[linecolor=lightblue](#1,#2){0.035}}
+
+\begin{document}
+	\psset{xunit=1cm,yunit=1cm,runit=1cm}
+	\begin{pspicture}(0,0)(3.5, 3.5)
+		\rput(1.75,3){\rnode{GPT}{\psovalbox{\textsf{GPT}}}}
+		\pnode(1.75, 0.8){GPT2}
+		
+		\rput(0.2, 1.75){\rnode{G1}{\psframebox{\textsf{G4}}}}
+		\rput(1, 1.75){\rnode{G2}{\psframebox{\textsf{G4}}}}
+		\rput(2.5, 1.75){\rnode{G3}{\psframebox{\textsf{G4}}}}
+		\rput(3.3, 1.75){\rnode{G4}{\psframebox{\textsf{G4}}}}
+		
+		\rput(1.75, 1.75){\rnode{...}{\textsf{...}}}
+		
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT}{G1}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT}{G2}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT}{G3}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT}{G4}
+		
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{G1}{GPT2}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{G2}{GPT2}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{G3}{GPT2}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{G4}{GPT2}
+		
+		\rput(1.75,-1.4){\rnode{GPT3}{\psovalbox{\textsf{GPT}}}}
+		
+		\rput(0.15, -0.15){\rnode{O1}{\psframebox{\textsf{Out}}}}
+		\rput(1, -0.15){\rnode{O2}{\psframebox{\textsf{Out}}}}
+		\rput(2.5, -0.15){\rnode{O3}{\psframebox{\textsf{Out}}}}
+		\rput(3.35, -0.15){\rnode{O4}{\psframebox{\textsf{Out}}}}
+		
+		\rput(1.75, -0.15){\rnode{...}{\textsf{...}}}
+		
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT2}{O1}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT2}{O2}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT2}{O3}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{GPT2}{O4}
+		
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{O1}{GPT3}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{O2}{GPT3}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{O3}{GPT3}
+		\ncdiag[angleA=-90,angleB=90,arm=0.2,linearc=0.2]{O4}{GPT3}
+		
+		
+	\end{pspicture}
+\end{document}

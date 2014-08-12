@@ -1,0 +1,6 @@
+2008-08-14 Lucas Clemente <luke.clemente@gmail.com> on hydra
+
+ * Introduced ChangeLog.txt
+ * Added GDML/XML Parsing
+ * Added run.sh, analysis.sh
+ * Comments ;)

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2009 Lucas Clemente
+
+This file is part of FLINT.
+
+FLINT is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+FLINT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with FLINT.
+If not, see <http://www.gnu.org/licenses/>.
+   
+
+GDML Setup file
+
+Length-unit is mm
+
+GDML-Doc: http://lcgapp.cern.ch/project/simu/framework/GDML/doc/GDMLmanual.pdf
+-->
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="gdml.xsd">
+
+ <particles>
+  <particle name="gamma" />
+  <particle name="higgs" /> <!-- Creates a funny message ;)-->
+  <particle name="e-" />
+  <particle name="e+" />
+  <particle name="proton" />
+ </particles>
+
+ <define>
+  <constant name="HALFPI" value="pi/2."/>
+  <constant name="PI" value="1.*pi"/>
+  <constant name="TWOPI" value="2.*pi"/>
+  <position name="center"/>
+  <position name="ph_1" z="1520.0"/>
+  <position name="plate_up" z="1000.0" x="110.0" />
+  <position name="plate_down" z="1000.0" x="-110.0" />
+ </define>
+
+ <materials>
+  <material name="Cu" Z="29" >
+   <D value="8.92" unit="g/cm3"/>
+   <atom value="63.546" unit="g/mole" />
+  </material>
+  
+  <material name="Vacuum" formula="vac" Z="1">
+   <D value="0.0899e-19" unit="kg/m3" />
+   <atom value="2.015558" unit="kg/mole"/> 
+  </material>
+  
+ </materials>
+ 
+ <solids>
+  <box name="WorldBox" x="100000.0" y="100000.0" z="100000.0"/>
+  <tube name="pinhole_1" z="20.0" rmin="1.0" rmax="1000.0" deltaphi="TWOPI"/>
+  <box name="plate" x="10.0" y="500.0" z="500.0" />
+ </solids>
+ 
+ <structure>
+  <volume name="pinhole_1">
+   <materialref ref="Cu"/>
+   <solidref ref="pinhole_1"/>
+  </volume>
+  
+  <volume name="plate">
+   <materialref ref="Cu"/>
+   <solidref ref="plate"/>
+  </volume>
+  
+  <volume name="World">
+   <materialref ref="Vacuum"/>
+   <solidref ref="WorldBox"/>
+   <physvol>
+    <volumeref ref="plate"/>
+    <positionref ref="plate_up"/>
+   </physvol>
+   <physvol>
+    <volumeref ref="plate"/>
+    <positionref ref="plate_down"/>
+   </physvol>
+   <physvol>
+    <volumeref ref="pinhole_1"/>
+    <positionref ref="ph_1"/>
+   </physvol>
+  </volume>
+ </structure>
+ 
+ <setup name="Default" version="1.0">
+  <world ref="World"/>
+ </setup>
+ 
+ <gpt>
+  N_E = 0;
+  N_P = 100;
+  
+  accuracy(16);
+  
+  radius = 1e-3;
+  
+  # m = mp;
+  # q = -qe;
+  # setfile("protons", "protons.gdf");
+  # 
+  # m = me;
+  # q = qe;
+  # setfile("electrons", "electrons.gdf");
+  
+  setparticles("electrons", N_E, me, qe, 0.0);
+  setparticles("protons", N_P, mp, -qe, 0.0);
+  
+  setrxydist("protons", "u", radius/2, radius);
+  setphidist("protons", "u", 0, 2*pi);
+  setGdist("protons", "u", 1.01, 0.009);
+  
+  setrxydist("electrons", "u", radius/2, radius);
+  setphidist("electrons", "u", 0, 2*pi);
+  setGdist("electrons", "u", 20.5, 2.0);
+  
+  G4Virtual("wcs", "I");
+  
+  d = 0.1;
+  U_a = 30e3;
+  
+  dy = 0.1;
+  dx = 1.0;
+  
+  erect("WCS",  0, 0, 1,   0, 0, 1,   0, 1, 0,   dx, dy, d,   U_a / d);
+  magbox("WCS", 0, 0, 1,   1, 0, 0,   0, 0, 1,   dy, dx, d,   6.8541e-3);
+  
+  G4Area(0, 0, 1.52, 2.0, 2.0, 0.04);
+  
+  #Up and down
+  G4Area( 0.11, 0, 1.0,  0.02, 1.0, 1.0);
+  G4Area(-0.11, 0, 1.0,  0.02, 1.0, 1.0);
+  
+  tout(0, 1e-7, 1e-11);
+  
+  dtmax = 1e-12;
+  dtmin = 1e-19;
+ </gpt>
+</gdml>

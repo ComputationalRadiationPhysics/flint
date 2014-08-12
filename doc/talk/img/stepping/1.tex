@@ -1,0 +1,118 @@
+\documentclass{article}
+
+\usepackage[applemac]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{setspace}  
+\usepackage{stmaryrd}
+\usepackage{nameref}
+\usepackage{multimedia}
+\usepackage{relsize}
+\usepackage{color}
+\usepackage{pst-all}
+\usepackage{anysize}
+\usepackage[papersize={3.5cm,3.6cm}]{geometry}
+
+
+\marginsize{-0.2cm}{-0cm}{-1.5cm}{-10cm}
+
+\pagestyle{empty}
+
+\definecolor{lightblue}{rgb}{0.4, 0.4, 1}
+\definecolor{lighterblue}{rgb}{0.7, 0.7, 1}
+
+\newcommand{\mypspoint}[2]{\pscircle*[linecolor=blue](#1,#2){0.05}\pscircle*[linecolor=lightblue](#1,#2){0.035}}
+
+\begin{document}
+\psset{xunit=1cm,yunit=1cm,runit=1cm}
+	\begin{pspicture}(0,0)(3,3.5)
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\mypspoint{2}{3} %GPT post
+		
+	\end{pspicture}
+	
+	\newpage
+	
+	\begin{pspicture}(0,0)(3,3.5)
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\mypspoint{2}{3} %GPT post
+		\mypspoint{0}{0}	 %origin
+	\end{pspicture}
+	
+	\newpage
+	
+	\begin{pspicture}(0,0)(3,3.5)
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\psline{-}(0,0)(2,3) %G4 Optimum
+		\mypspoint{0}{0}	 %origin
+		\mypspoint{2}{3} %GPT post
+	\end{pspicture}
+	
+	\newpage
+	
+	\begin{pspicture}(0,0)(3,3.5)
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\psline{-}(0,0)(2,3) %G4 Optimum
+		\pstextpath[r](0,0){\psline{-}(0,0)(2,2)}{$^{_{_\textsf{\tiny{Real Geant4 path~~~~~}}}}$} %G4 Real
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\mypspoint{0}{0}	 %origin
+		\mypspoint{2}{3} %GPT post
+		\mypspoint{2}{2} %G4 post
+	\end{pspicture}
+	
+	\newpage
+	
+	\begin{pspicture}(0,0)(3,3.5)
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\psline{-}(0,0)(2,3) %G4 Optimum
+		\pstextpath[r](0,0){\psline{-}(0,0)(2,2)}{$^{_{_\textsf{\tiny{Real Geant4 path~~~~~}}}}$} %G4 Real
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\pstextpath[c](0,0){\psline{->}(2,2)(2.6,2.4)}{$^{\textsf{\tiny{Geant4}}}$} %G4 Momentum
+		\mypspoint{0}{0}	 %origin
+		\mypspoint{2}{3} %GPT post
+		\mypspoint{2}{2} %G4 post
+	\end{pspicture}
+	
+	\newpage
+	
+	\begin{pspicture}(0,0)(3,3.5)
+		\pswedge*[linecolor=lighterblue](0,0){0.5cm}{33.69}{56.31}           %origin angle
+		\psarc[linewidth=0.5pt, linecolor=blue]{->}(0,0){0.5cm}{33.69}{56.31} %origin angle
+		
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\psline{-}(0,0)(2,3) %G4 Optimum
+		\pstextpath[r](0,0){\psline{-}(0,0)(2,2)}{$^{_{_\textsf{\tiny{Real Geant4 path~~~~~}}}}$} %G4 Real
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\pstextpath[c](0,0){\psline{->}(2,2)(2.6,2.4)}{$^{\textsf{\tiny{Geant4}}}$} %G4 Momentum
+		\psline{->}(0,0)(0.6,0.4) %G4 Momentum origin
+		
+		\mypspoint{0}{0}	 %origin
+		\mypspoint{2}{3} %GPT post
+		\mypspoint{2}{2} %G4 post
+	\end{pspicture}
+	
+	\newpage
+	
+	\begin{pspicture}(0,0)(3,3.5)
+		\pswedge*[linecolor=lighterblue](0,0){0.5cm}{33.69}{56.31}           %origin angle
+		\psarc[linewidth=0.5pt, linecolor=blue]{->}(0,0){0.5cm}{33.69}{56.31} %origin angle
+		\pswedge*[linecolor=lighterblue](2,2){0.5cm}{337.38}{0}              %post angle
+		\psarc[linewidth=0.5pt, linecolor=blue]{->}(2,2){0.5cm}{337.38}{0}    %post angle
+	
+		\pstextpath[c](0,0){\psbezier[linewidth=1.5pt]{-}(0,0)(0.3,3)(2,3)}{$^{\textsf{Theoretical track}}$}
+		\psline{-}(0,0)(2,3) %G4 Optimum
+		\pstextpath[r](0,0){\psline{-}(0,0)(2,2)}{$^{_{_\textsf{\tiny{Real Geant4 path~~~~~}}}}$} %G4 Real
+		\pstextpath[c](0,0){\psline{->}(2,3)(3,3)}{$^{\textsf{\tiny{GPT}}}$} %GPT Momentum
+		\pstextpath[c](0,0){\psline{->}(2,2)(2.6,2.4)}{$^{\textsf{\tiny{Geant4}}}$} %G4 Momentum
+		\psline{->}(0,0)(0.6,0.4) %G4 Momentum origin
+		\psline{->}(2,2)(3,2) %GPT Momentum at G4 post
+		\pstextpath[c](0,0){\psline{->}(2,2)(2.67,1.72)}{$_{_{_{_{\textsf{\tiny{Result}}}}}}$} %Calculated Momentum post
+		
+		\mypspoint{0}{0}	 %origin
+		\mypspoint{2}{3} %GPT post
+		\mypspoint{2}{2} %G4 post
+	\end{pspicture}
+\end{document}
